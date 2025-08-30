@@ -2,95 +2,228 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aureus Nexus – How to Pay</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aureus Nexus – Payment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
   <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
+      background: linear-gradient(135deg, #667eea, #764ba2);
       font-family: 'Poppins', sans-serif;
-      background-color: #f5f7fa;
-      color: #333;
+      color: #2d2d2d;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       min-height: 100vh;
-      padding: 40px 20px;
+      padding: 20px;
     }
-    .payment-container {
+    /* Container */
+    .payment-wrapper {
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-      max-width: 400px;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
       width: 100%;
-      padding: 32px;
+      max-width: 420px;
+      padding: 36px 32px;
       text-align: center;
+      position: relative;
     }
-    .payment-container h1 {
-      margin-bottom: 16px;
+    h1 {
+      margin: 0 0 12px;
       font-weight: 700;
-      color: #1a202c;
-      font-size: 1.75rem;
+      color: #322f4a;
+      font-size: 2.25rem;
+      letter-spacing: 1px;
     }
-    .payment-container p.subtitle {
-      margin-bottom: 24px;
+    p.subtitle {
       font-weight: 300;
-      color: #555;
-    }
-    .qr-code {
-      width: 200px;
-      height: 200px;
-      margin: 0 auto 16px auto;
-      background: url('cashfree-qr-screenshot.png') center/contain no-repeat;
-      border: 2px solid #e2e8f0;
-      border-radius: 8px;
-    }
-    .upi-id {
-      margin: 16px 0;
-      text-align: left;
-    }
-    .upi-id label {
-      display: block;
-      font-weight: 500;
-      margin-bottom: 8px;
-    }
-    .upi-id input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd5e0;
-      border-radius: 6px;
       font-size: 1rem;
+      margin-bottom: 30px;
+      color: #555969;
     }
-    .support {
-      margin-top: 24px;
-      font-size: 0.95rem;
-      color: #555;
+    /* QR code */
+    .qr-code {
+      width: 220px;
+      height: 220px;
+      margin: 0 auto 24px;
+      border-radius: 16px;
+      border: 6px solid #764ba2;
+      background: #f2f2f2 url('https://cdn.cashfree.com/qr-codes/sample-qr.png') center center no-repeat;
+      background-size: contain;
+      box-shadow: 0 4px 10px rgba(118, 75, 162, 0.4);
+      transition: transform 0.3s ease;
+      cursor: pointer;
     }
-    .support a {
-      color: #3182ce;
+    .qr-code:hover {
+      transform: scale(1.05);
+    }
+    /* UPI ID input */
+    .upi-id-container {
+      margin-bottom: 28px;
+      position: relative;
+      text-align: left;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    label {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #322f4a;
+      margin-bottom: 8px;
+      display: block;
+    }
+    input#upi-id {
+      width: 100%;
+      padding: 14px 48px 14px 16px;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      border: 2px solid #764ba2;
+      outline: none;
       font-weight: 500;
-      text-decoration: none;
+      color: #322f4a;
+      background: #f9f7ff;
+      user-select: all;
+      transition: border-color 0.3s ease;
     }
-    .support a:hover {
+    input#upi-id:focus {
+      border-color: #4054b2;
+      background: #f0f2ff;
+    }
+    /* Copy button */
+    button.copy-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #764ba2;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(118, 75, 162, 0.5);
+      transition: background-color 0.3s ease;
+    }
+    button.copy-btn:hover {
+      background: #5a368f;
+    }
+    /* Support text */
+    .support-text {
+      font-size: 0.95rem;
+      color: #444660;
+      line-height: 1.5;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .support-text a {
+      color: #764ba2;
+      font-weight: 600;
+      text-decoration: none;
+      transition: text-decoration 0.3s ease;
+    }
+    .support-text a:hover {
       text-decoration: underline;
+    }
+    /* Toast notification */
+    #toast {
+      visibility: hidden;
+      min-width: 140px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 12px 20px;
+      position: fixed;
+      z-index: 9999;
+      left: 50%;
+      bottom: 40px;
+      font-size: 1rem;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    #toast.show {
+      visibility: visible;
+      opacity: 1;
+    }
+    /* Responsive */
+    @media (max-width: 480px) {
+      .payment-wrapper {
+        padding: 28px 24px;
+      }
+      h1 {
+        font-size: 1.75rem;
+      }
+      .qr-code {
+        width: 180px;
+        height: 180px;
+        border-width: 4px;
+      }
+      input#upi-id {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="payment-container">
+  <div class="payment-wrapper" role="main" aria-label="Aureus Nexus UPI Payment Section">
     <h1>How to Pay</h1>
     <p class="subtitle">Scan our UPI QR code or enter our UPI ID in any UPI app</p>
-    <div class="qr-code" role="img" aria-label="Cashfree UPI QR code screenshot"></div>
-    <div class="upi-id">
-      <label for="upi-id-field">Or enter our UPI ID:</label>
-      <input id="upi-id-field" type="text" value="aureus@icici" readonly />
+    
+    <div class="qr-code" role="img" aria-label="Cashfree UPI QR code" title="Scan this QR code to pay"></div>
+    
+    <div class="upi-id-container">
+      <label for="upi-id">Or enter our UPI ID:</label>
+      <input id="upi-id" type="text" value="aureus@icici" readonly aria-readonly="true" />
+      <button class="copy-btn" aria-label="Copy UPI ID" title="Copy UPI ID to clipboard">&#128203;</button>
     </div>
-    <div class="support">
-      Need help? Contact us at
-      <a href="mailto:support@aureusnexus.com">support@aureusnexus.com</a>
-      or on WhatsApp:
-      <a href="https://wa.me/919876543210" target="_blank">+91 98765 43210</a>
-    </div>
+    
+    <p class="support-text">
+      Need help? Contact us at 
+      <a href="mailto:support@aureusnexus.com" target="_blank" rel="noopener noreferrer">support@aureusnexus.com</a> 
+      or on WhatsApp: 
+      <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer">+91 98765 43210</a>
+    </p>
   </div>
+
+  <div id="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+  <script>
+    // Copy to clipboard functionality
+    const copyBtn = document.querySelector('.copy-btn');
+    const upiIdInput = document.getElementById('upi-id');
+    const toast = document.getElementById('toast');
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(upiIdInput.value).then(() => {
+        showToast('UPI ID copied!');
+      }).catch(() => {
+        showToast('Failed to copy. Please copy manually.');
+      });
+    });
+
+    // Optional: Clicking QR code opens a larger version or provides info (can be customized)
+    const qrCode = document.querySelector('.qr-code');
+    qrCode.addEventListener('click', () => {
+      alert('Open your UPI app and scan this QR code to make the payment.');
+    });
+  </script>
 </body>
 </html>
+
